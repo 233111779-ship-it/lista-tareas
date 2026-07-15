@@ -103,6 +103,22 @@ body {
   border-radius: 6px;
 }
 
+.ticket-form__date {
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--chalk-soft);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  border: 1px solid var(--rule);
+}
+
+.ticket-form__date:focus {
+  outline: 2px solid var(--accent-mustard);
+  outline-offset: 2px;
+}
+
 .ticket-form__submit {
   border: none;
   border-radius: 6px;
@@ -168,12 +184,33 @@ body {
 
 .ticket-list__item {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   background: var(--paper);
   color: var(--ink);
   border-radius: 4px 10px 10px 4px;
   padding: 0.9rem 1rem 0.9rem 1.5rem;
   font-size: 0.98rem;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.ticket-list__due {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  background: rgba(36, 41, 31, 0.08);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  white-space: nowrap;
+}
+
+.ticket-list__due--overdue {
+  color: #7a2b17;
+  background: rgba(216, 101, 74, 0.22);
 }
 
 /* Perforación tipo boleto en el borde izquierdo del ticket */
