@@ -50,12 +50,34 @@ function renderizarTareas() {
   tareas.forEach((tarea) => {
     const item = document.createElement('li');
     item.className = 'ticket-list__item';
+    if (tarea.completada) item.classList.add('ticket-list__item--completada');
     item.dataset.id = tarea.id;
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'ticket-list__check';
+    checkbox.checked = tarea.completada;
+    checkbox.setAttribute('aria-label', 'Marcar tarea como completada');
+    checkbox.dataset.accion = 'completar';
+    item.appendChild(checkbox);
 
     const texto = document.createElement('span');
     texto.className = 'ticket-list__text';
     texto.textContent = tarea.texto;
     item.appendChild(texto);
+
+    if (tarea.fechaVencimiento) {
+      const { texto: fechaLegible, vencida } = formatearVencimiento(tarea.fechaVencimiento);
+      const badge = document.createElement('span');
+      badge.className = vencida
+        ? 'ticket-list__due ticket-list__due--overdue'
+        : 'ticket-list__due';
+      badge.textContent = `Vence ${fechaLegible}`;
+      item.appendChild(badge);
+    }
+
+    const acciones = document.createElement('span');
+    acciones.className = 'ticket-list__actions';
 
     const botonEditar = document.createElement('button');
     botonEditar.type = 'button';
@@ -73,20 +95,54 @@ function renderizarTareas() {
     botonEliminar.textContent = '✕';
     acciones.appendChild(botonEliminar);
 
-
-    if (tarea.fechaVencimiento) {
-      const { texto: fechaLegible, vencida } = formatearVencimiento(tarea.fechaVencimiento);
-      const badge = document.createElement('span');
-      badge.className = vencida
-        ? 'ticket-list__due ticket-list__due--overdue'
-        : 'ticket-list__due';
-      badge.textContent = `Vence ${fechaLegible}`;
-      item.appendChild(badge);
-    }
-
+    item.appendChild(acciones);
     taskList.appendChild(item);
   });
 }
+
+function buscarTarea(id) {
+  return tareas.find((tarea) => tarea.id === id);
+}
+
+// Delegación de eventos: un solo listener en el contenedor atiende
+// completar, editar y eliminar sin importar cuántas tareas existan.
+taskList.addEventListener('click', (evento) => {
+  const boton = evento.target.closest('button[data-accion]');
+  if (!boton) return;
+
+  const item = evento.target.closest('.ticket-list__item');
+  const tarea = buscarTarea(item.dataset.id);
+  if (!tarea) return;
+
+  if (boton.dataset.accion === 'eliminar') {
+    tareas = tareas.filter((t) => t.id !== tarea.id);
+    guardarTareas();
+    renderizarTareas();
+  }
+
+  if (boton.dataset.accion === 'editar') {
+    const nuevoTexto = window.prompt('Actualizar tarea:', tarea.texto);
+    if (nuevoTexto === null) return; // el usuario canceló
+    const textoLimpio = nuevoTexto.trim();
+    if (!textoLimpio) return;
+
+    tarea.texto = textoLimpio;
+    guardarTareas();
+    renderizarTareas();
+  }
+});
+
+taskList.addEventListener('change', (evento) => {
+  if (evento.target.dataset.accion !== 'completar') return;
+
+  const item = evento.target.closest('.ticket-list__item');
+  const tarea = buscarTarea(item.dataset.id);
+  if (!tarea) return;
+
+  tarea.completada = evento.target.checked;
+  guardarTareas();
+  renderizarTareas();
+});
 
 taskForm.addEventListener('submit', (evento) => {
   evento.preventDefault();
