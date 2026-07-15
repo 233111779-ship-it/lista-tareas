@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitácora de Tareas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="board">
+
+    <header class="board__header">
+      <p class="board__eyebrow">Turno abierto</p>
+      <h1 class="board__title">Bitácora de tareas</h1>
+      <p class="board__subtitle">Registra, sella y archiva los pendientes del equipo.</p>
+    </header>
+
+    <form id="task-form" class="ticket-form">
+      <input
+        type="text"
+        id="task-input"
+        class="ticket-form__input"
+        placeholder="¿Qué hay que resolver?"
+        autocomplete="off"
+      />
+      <button type="submit" class="ticket-form__submit">Agregar</button>
+    </form>
+
+    <section class="counter" id="counter" aria-live="polite">
+      <span class="counter__label">Tickets cerrados</span>
+      <span class="counter__value" id="counter-value">0</span>
+      <span class="counter__divider">/</span>
+      <span class="counter__total" id="counter-total">0</span>
+    </section>
+
+    <ul id="task-list" class="ticket-list">
+      <!-- Las tareas se insertan aquí dinámicamente desde script.js -->
+    </ul>
+
+    <footer class="board__footer">
+      <!-- Los integrantes del equipo se agregarán en un commit posterior -->
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
