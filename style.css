@@ -1,7 +1,25 @@
 /* style.css
-   Estructura y distribución base de la aplicación.
-   (La paleta de colores y el aspecto visual definitivo se aplican
-   en un commit posterior, a cargo de Programador 2). */
+   Aspecto visual: "Bitácora de turno" — cada tarea es un ticket
+   perforado que se sella al crearse y se archiva al completarse,
+   como en un mostrador de taller. */
+
+:root {
+  --bg: #1f3b2e;
+  --bg-board: #24493a;
+  --paper: #f3efe1;
+  --ink: #24291f;
+  --ink-soft: #5b5a4d;
+  --chalk: #f3efe1;
+  --chalk-soft: #cdd8ce;
+  --rule: rgba(243, 239, 225, 0.18);
+  --accent-mustard: #e8b23d;
+  --accent-teal: #6fbf9e;
+  --accent-coral: #d8654a;
+
+  --font-display: 'Special Elite', 'Courier New', monospace;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
 
 * {
   box-sizing: border-box;
@@ -13,8 +31,13 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
-  font-family: system-ui, sans-serif;
+  padding: 3rem 1rem;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(243, 239, 225, 0.04), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(243, 239, 225, 0.03), transparent 45%);
+  font-family: var(--font-body);
+  color: var(--chalk);
 }
 
 .board {
@@ -22,42 +45,158 @@ body {
   max-width: 640px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 
-.board__header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+/* --- Encabezado ------------------------------------------------ */
+
+.board__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-mustard);
 }
+
+.board__title {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  line-height: 1.15;
+  margin-top: 0.35rem;
+  color: var(--chalk);
+}
+
+.board__subtitle {
+  margin-top: 0.4rem;
+  color: var(--chalk-soft);
+  font-size: 0.95rem;
+}
+
+/* --- Formulario -------------------------------------------------- */
 
 .ticket-form {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  background: var(--bg-board);
+  border: 1px dashed var(--rule);
+  border-radius: 10px;
+  padding: 0.6rem;
 }
 
 .ticket-form__input {
   flex: 1;
-  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  padding: 0.65rem 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--chalk);
+}
+
+.ticket-form__input::placeholder {
+  color: var(--chalk-soft);
+}
+
+.ticket-form__input:focus {
+  outline: 2px solid var(--accent-mustard);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 .ticket-form__submit {
-  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 6px;
+  padding: 0.65rem 1.1rem;
+  background: var(--accent-mustard);
+  color: #241a05;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 0.12s ease;
 }
 
+.ticket-form__submit:hover {
+  transform: translateY(-1px);
+}
+
+.ticket-form__submit:active {
+  transform: translateY(0);
+}
+
+/* --- Contador (turnstile) ---------------------------------------- */
+
 .counter {
+  align-self: flex-start;
   display: flex;
   align-items: baseline;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  background: var(--bg-board);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
 }
+
+.counter__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--chalk-soft);
+}
+
+.counter__value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-teal);
+}
+
+.counter__divider,
+.counter__total {
+  font-size: 0.85rem;
+  color: var(--chalk-soft);
+}
+
+/* --- Lista de tickets ---------------------------------------------- */
 
 .ticket-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.7rem;
 }
+
+.ticket-list__item {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 4px 10px 10px 4px;
+  padding: 0.9rem 1rem 0.9rem 1.5rem;
+  font-size: 0.98rem;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Perforación tipo boleto en el borde izquierdo del ticket */
+.ticket-list__item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background-image: radial-gradient(circle, var(--bg) 2.5px, transparent 2.6px);
+  background-size: 10px 14px;
+  background-position: center;
+}
+
+/* --- Pie de página ---------------------------------------------- */
 
 .board__footer {
   text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--chalk-soft);
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--rule);
 }
