@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task/ — Panel de tareas del equipo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ===== Encabezado ===== -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark">Task/</span>
+        <span class="brand-sub">panel de pendientes del equipo</span>
+      </div>
+
+      <!-- Resumen numérico: lo completa el Programador 4 (comodín) con la lógica de conteo -->
+      <div class="summary" id="summary">
+        <div class="summary-item">
+          <span class="summary-value" id="count-total">0</span>
+          <span class="summary-label">total</span>
+        </div>
+        <div class="summary-divider" aria-hidden="true"></div>
+        <div class="summary-item">
+          <span class="summary-value" id="count-done">0</span>
+          <span class="summary-label">hechas</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== Formulario para agregar tareas ===== -->
+    <!-- La lógica de "agregar" la implementa el Programador 3 -->
+    <!-- El campo de fecha de vencimiento lo agrega el Programador 4 -->
+    <section class="add-task">
+      <form id="task-form" class="task-form" autocomplete="off">
+        <span class="field-index" aria-hidden="true">＋</span>
+
+        <input
+          type="text"
+          id="task-input"
+          class="task-input"
+          name="task"
+          placeholder="Describe la tarea a realizar…"
+          required
+        />
+
+        <!-- Placeholder de fecha de vencimiento — se activa en el commit del Programador 4 -->
+        <input
+          type="date"
+          id="task-due"
+          class="task-due"
+          name="due"
+        />
+
+        <button type="submit" class="btn-primary">Agregar</button>
+      </form>
+    </section>
+
+    <!-- ===== Lista de tareas ===== -->
+    <main class="task-board">
+      <div class="task-board-head">
+        <span class="col-index">#</span>
+        <span class="col-desc">Tarea</span>
+        <span class="col-due">Vence</span>
+        <span class="col-actions">Acciones</span>
+      </div>
+
+      <!-- El Programador 3 inserta aquí las tareas agregadas -->
+      <!-- El Programador 1 agrega los botones/lógica de eliminar y actualizar -->
+      <ul id="task-list" class="task-list">
+        <!-- Estado vacío: se reemplaza dinámicamente cuando existan tareas -->
+        <li class="empty-state" id="empty-state">
+          Aún no hay tareas. Agrega la primera desde el formulario de arriba.
+        </li>
+      </ul>
+    </main>
+
+    <!-- ===== Pie de página ===== -->
+    <!-- El Programador 3 agrega aquí los nombres del equipo -->
+    <footer class="app-footer">
+      <ul class="team-list" id="team-members">
+        <!-- Integrantes -->
+      </ul>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

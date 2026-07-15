@@ -1,0 +1,408 @@
+:root {
+  /* Color */
+  --bg: #14171c;
+  --panel: #1b1f26;
+  --line: #272c35;
+  --line-soft: #20242c;
+  --text: #e8eaed;
+  --text-dim: #8b92a0;
+  --text-faint: #5b6270;
+  --accent: #3d6ee0;
+  --accent-soft: rgba(61, 110, 224, 0.12);
+  --success: #37a372;
+  --success-soft: rgba(55, 163, 114, 0.12);
+  --danger: #d9524c;
+  --danger-soft: rgba(217, 82, 76, 0.12);
+
+  /* Tipografía */
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  /* Layout */
+  --radius: 3px;
+  --gap: 16px;
+  --border: 1px solid var(--line);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Contenedor general ===== */
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ===== Encabezado ===== */
+
+.app-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: var(--border);
+  padding-bottom: 20px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.brand-mark::after {
+  content: "";
+}
+
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+}
+
+.summary-value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.summary-label {
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.summary-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--line);
+}
+
+/* ===== Formulario de captura ===== */
+
+.add-task {
+  background: var(--panel);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+}
+
+.task-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.field-index {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 16px;
+  border-right: var(--border);
+}
+
+.task-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 10px 4px;
+}
+
+.task-input::placeholder {
+  color: var(--text-faint);
+}
+
+.task-due {
+  flex: 0 0 auto;
+  background: var(--bg);
+  border: var(--border);
+  border-radius: 2px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px 8px;
+  outline: none;
+}
+
+.btn-primary {
+  flex: 0 0 auto;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.btn-primary:hover {
+  background: #4f7ce8;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* ===== Tablero de tareas ===== */
+
+.task-board {
+  background: var(--panel);
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.task-board-head {
+  display: grid;
+  grid-template-columns: 44px 1fr 110px 96px;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.empty-state {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+/* ===== Fila de tarea (referencia para Programadores 1, 3 y 4) =====
+
+   Se espera que cada <li> generado dinámicamente use esta estructura:
+
+   <li class="task-row" data-status="pending|done">
+     <span class="row-accent"></span>
+     <span class="col-index">01</span>
+     <span class="col-desc">Texto de la tarea</span>
+     <span class="col-due">dd/mm</span>
+     <span class="col-actions">...botones...</span>
+   </li>
+*/
+
+.task-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr 110px 96px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: var(--border);
+  font-size: 14px;
+}
+
+.task-row:last-child {
+  border-bottom: none;
+}
+
+.row-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--text-faint);
+}
+
+.task-row[data-status="done"] .row-accent {
+  background: var(--success);
+}
+
+.task-row[data-status="pending"] .row-accent {
+  background: var(--accent);
+}
+
+.col-index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.col-desc {
+  color: var(--text);
+}
+
+.task-row[data-status="done"] .col-desc {
+  color: var(--text-dim);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-faint);
+}
+
+.col-due {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.col-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.col-actions button {
+  background: transparent;
+  border: var(--border);
+  border-radius: 2px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.col-actions button:hover {
+  color: var(--text);
+  border-color: var(--text-faint);
+}
+
+.col-actions .btn-danger:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.col-actions .btn-success:hover {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+/* ===== Pie de página / integrantes ===== */
+
+.app-footer {
+  border-top: var(--border);
+  padding-top: 16px;
+}
+
+.team-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ===== Responsivo ===== */
+
+@media (max-width: 560px) {
+  .task-form {
+    flex-wrap: wrap;
+  }
+
+  .task-due {
+    order: 3;
+    flex: 1 1 auto;
+  }
+
+  .btn-primary {
+    order: 4;
+    flex: 1 1 auto;
+  }
+
+  .task-board-head {
+    grid-template-columns: 30px 1fr 70px;
+  }
+
+  .task-board-head .col-actions {
+    display: none;
+  }
+
+  .task-row {
+    grid-template-columns: 30px 1fr 70px;
+  }
+}
+
+/* ===== Accesibilidad ===== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
